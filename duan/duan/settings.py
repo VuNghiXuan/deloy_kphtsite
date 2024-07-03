@@ -33,10 +33,14 @@ SECRET_KEY = 'django-insecure-d3t)kdu_(s13-^v(9!z4p+=9itl+$^%5c3e3m2ao6$hg=kq%di
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app']
+
 
 # deloy 20240702
-CSRF_TRUSTED_ORIGINS = []
+# CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = ['deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app']
+
 
 
 # Application definition

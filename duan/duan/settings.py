@@ -114,22 +114,22 @@ WSGI_APPLICATION = 'duan.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # This is sqlite3
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # This is postgresql
 # Load our env after sitings portgressql and dotenv
-# load_dotenv()
+load_dotenv()
 
-# db_host = os.environ.get('HOST')
-# db_name = os.environ.get('NAME')
-# db_user = os.environ.get('USER')
-# db_password = os.environ.get('PASSWORD')
-# db_port = os.environ.get('PORT')
+db_host = os.environ.get('HOST')
+db_name = os.environ.get('NAME')
+db_user = os.environ.get('USER')
+db_password = os.environ.get('PASSWORD')
+db_port = os.environ.get('PORT')
 
 
 # # Sử dụng biến môi trường
@@ -137,16 +137,16 @@ DATABASES = {
 # print(f"Tên người dùng cơ sở dữ liệu: {db_user}")
 # print(f"Mật khẩu cơ sở dữ liệu: {db_password}")
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': db_name,# get from postgresql with name: "PGDATABASE" chính là 'your_database_name',
-#         'USER': db_user,# get name:"PGUSER" hay 'your_database_user',
-#         'PASSWORD': db_password,#'your_database_password','uEalPvUmMKzLQADehOAUEklVYXvHQzDO'
-#         'HOST': db_host,#'localhost',
-#         'PORT': db_port,#'5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_name,# get from postgresql with name: "PGDATABASE" chính là 'your_database_name',
+        'USER': db_user,# get name:"PGUSER" hay 'your_database_user',
+        'PASSWORD': db_password,#'your_database_password','uEalPvUmMKzLQADehOAUEklVYXvHQzDO'
+        'HOST': db_host,#'localhost',
+        'PORT': db_port,#'5432',
+    }
+}
 
 
 # Password validation

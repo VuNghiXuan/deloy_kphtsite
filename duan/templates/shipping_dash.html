@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% comment %} {% load static %}  {% endcomment %}
+
+{% block mycontent %}
+
+
+              <div class = "container">
+                {% comment %} {% for bo in bo_suu_tap_duoc_chon  %} {% endcomment %} 
+                  
+                  <div class="products_item py-3">
+                    <div class="row">
+                      <center>
+                        <div class='col-8'>
+        <h1>DANH MỤC ĐƠN HÀNG THÀNH CÔNG</h1>
+          <table class="table table-striped table-hover table-bordered ">
+            <thead class='table-dark'>
+              <tr>
+                {% comment %} <th scope="col">STT</th> {% endcomment %}
+                <th scope="col">Đơn hàng</th>
+                  <th scope="col">Giá trị</th>
+                  <th scope="col">Tên khách</th>
+                  <th scope="col">Người nhận</th>
+                  {% comment %} <th scope="col">Thông tin nhận</th> {% endcomment %}
+                  <th scope="col">Ngày xác nhận đã vận chuyển</th>
+                  <th scope="col">Xác nhận lại</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              {% for ord in orders %}
+              <tr>
+                {% comment %} <th >{{forloop.counter}}</th> {% endcomment %}
+                <td><a href="{% url 'order_detail' ord.id %}">{{ord.id}}</a></td>
+                <td>{{ord.amount_paid}} (đồng)</td>
+                <td >{{ord.user.username}}</td>
+                <td>{{ord.full_name}}</td>
+                
+                {% comment %} <td>{{ ord.shipping_address}} </td> {% endcomment %}
+                <td>{{ord.date_shipped}}</td>
+                <td>
+                  <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="shipping_status" value="false">
+                    <input type="hidden" name="num" value={{ord.id}}>
+                    <button type="submit" class="btn btn-danger">Chưa nhận hàng</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor%}
+              
+            </tbody>
+          </table>
+          <br><strong>Ghi chú: </strong> "Xác nhận lại" là chuyển trạng thái đơn hàng thành công --> trạng thái "Đang giao hàng" </br>
+         
+        <br></br>
+                        </div>
+
+                      </center>
+                      
+                    </div>
+                  </div>
+                </div>
+                <br></br> <br></br> <br></br>    
+              </div>
+
+<!-- css cho Phần slider products -->
+<style>
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .click-item{
+    text-decoration: none; 
+    color: black; /* Màu chữ mặc định */
+    
+  }
+
+  .h5 {
+    color: black;
+  }
+  
+  .item:hover h5 {
+    color: #ffc107; /* Màu chữ khi di chuột qua */
+    font-size: 1.2em; /* Increase font size on hover */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Animation for shaking effect */
+  }
+  .h6, .h7 {
+    text-align: center;
+  }
+
+  .product-item:hover h7 {  /* Target h7 within hovered product-item */
+    color: #ffc107; /* Hover color for h7 */
+    font-size: 1.2em; /* Increase font size on hover */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Animation for shaking effect */
+  }
+
+ 
+{% comment %} Xử lý trái tim trên ảnh {% endcomment %}
+  .product-item {
+    position: relative; /* Enable positioning for child elements */
+    text-align: center;
+  }
+
+  .like-btn {
+    position: absolute; /* Position the heart icon absolutely */
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    font-size: 24px; /* Adjust font size as needed */
+    color: #ff0000; /* Red color for the heart icon */
+    cursor: pointer; /* Indicate clickable behavior */
+  }
+
+  .like-btn.liked {
+    color: #00ff00; /* Green color for liked hearts */
+  }
+
+  /* Ensures the heart icon stays within the product image boundaries */
+  .product-item img {
+    max-width: 100%; /* Ensure the image doesn't overflow its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Make the image a block element */
+  }
+
+  .product-item .like-btn {
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    z-index: 1; /* Ensure the heart icon is on top of the image */
+  }
+  /* ... (Previous CSS rules) ... */
+
+  h1.text-uppercase.p-3 {
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
+    text-align: center;
+  }
+
+
+</style>
+
+{% comment %} Click vào ảnh {% endcomment %}
+
+{% endblock mycontent %} 
+
+
+<!--
+  https://kimphathiepthanh.com/danh-muc-san-pham/trang-suc-cau-hon/page/2/
+-->

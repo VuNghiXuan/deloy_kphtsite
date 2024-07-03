@@ -1,0 +1,21 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  
+</head>
+<body>
+  <h1>CAMERA ĐANG MỞ ....</h1>  
+
+  {% if messages %}
+    <ul>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <p>Vui lòng đưa mã vạch trước camera để thực hiện quét mã. Việc quét mã thành công sau khi nghe tiếng bíp kết thúc chương trình!!!</p>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block mycontent %}
+
+<br></br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-header">
+          <h2>CHỈNH SỬA THÔNG TIN TÀI KHOẢN</h2>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{% url 'update_user' %}">
+            {% csrf_token %}
+            {{ user_form.as_p}}
+            <!--
+            .as_p**: Đây là phương thức do các biểu mẫu Django cung cấp. 
+            Nó hiển thị các trường biểu mẫu trong các thẻ HTML đoạn văn (<p>)
+            -->
+
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+          </form>
+        
+          <!-- Phần chỉnh sửa password -->
+        {% comment %} <br></br>
+        <h3> Click vào thẻ bên dưới để thay đổi mật khẩu<h3>
+        <a href='{% url "update_password" %}' class="btn btn-primary"> Thay đổi mật khẩu</a> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock mycontent %}
+
+<style>
+  /* Style for the container */
+  .container {
+    max-width: 100%;
+    padding: 50px; /* Padding on all sides */
+  }
+
+  /* Style for the card */
+  .card {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+
+  /* Style for the card header */
+  .card-header {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* Style for the form group */
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  /* Style for the form label */
+  .form-label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  /* Style for the form input */
+  .form-control {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  /* Style for the submit button */
+  .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+</style>

@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% comment %} {% load static %}  {% endcomment %}
+
+{% block mycontent %}
+<section class= "mytitle bg-dark text-white py-4 my-1" >
+  <div class ="container">
+    <header class== "bg-dark py-2">
+      <div class = "container px-4 px-lg-5 my-2">
+        <div class='text-center text-white'>
+          <h1 class = "display-4 fw-border"> QUYỀN TRUY CẬP HỆ THỐNG
+            <p class="lead fw-normal text-white-50 mb-0"> 
+              Danh mục quyền truy cập hệ thống của bạn
+            </p>
+          </h1>
+        </div>
+      </div>
+    </header>
+  </div>
+</section>
+
+<div class = "container">
+  {% comment %} {% for bo in bo_suu_tap_duoc_chon  %} {% endcomment %} 
+    
+    <div class="products_item py-3">
+      <div class="row">
+        <h2>Tên đăng nhập: <strong>{{user.username}}</strong></h2>
+        <h3>I. Thuộc nhóm phân cấp quyền: </h3>
+        {% for gr in user_group%}
+         
+          <p><strong>{{forloop.counter}}. </strong>{{gr}} </p>
+          
+        {% endfor%}
+
+        <h3>II. Quyền sử dụng và truy cập ứng dụng:</h3>
+        <!--Xem-->        
+        {% if user_view %}
+        <h5><strong>"Xem (hiển thị)"</strong> các đối tượng trong các chức năng sau:</h5>
+            {% for view in user_view %} 
+            <li style = 'margin-left: 20px;'>{{view}}</li>     
+            {% endfor %}            
+        {% endif %} 
+
+        <!--Thêm mới-->
+        {% if user_add %}
+          <h5><strong>"Tạo và thêm mới"</strong> các đối tượng trong các chức năng sau:</h5>
+            {% for add in user_add %} 
+            <li style = 'margin-left: 20px;'>{{add}}</li>     
+            {% endfor %}            
+        {% endif %} 
+        
+        <!--Xóa-->        
+        {% if user_delete %}
+        <h5><strong>"Xóa"</strong> các đối tượng trong các chức năng sau:</h5>
+            {% for del in user_delete %} 
+            <li style = 'margin-left: 20px;'>{{del}}</li>     
+            {% endfor %}            
+        {% endif %} 
+
+        <!--Chỉnh sửa-->
+        {% if user_change %}
+        <h5><strong>"Chỉnh sửa, cập nhật dữ liệu"</strong> các đối tượng trong các chức năng sau:</h5>
+            {% for change in user_change %} 
+            <li style = 'margin-left: 20px;'>{{change}}</li>     
+            {% endfor %}           
+        {% endif %} 
+
+        {% if user.is_superuser%}  
+          <h3>III. Tên codename dùng mở rộng tính năng:</h3>
+          {% for per in user_permissions%}          
+            <p><strong>{{forloop.counter}}. </strong> {{per}} </p>            
+          {% endfor%}
+        {% endif %} 
+      </div>
+    </div>
+  </div>
+  {% comment %} {%endfor bo_suu_tap%}      {% endcomment %}
+</div>
+
+<!-- css cho Phần slider products -->
+<style>
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .click-item{
+    text-decoration: none; 
+    color: black; /* Màu chữ mặc định */
+    
+  }
+
+  .h5 {
+    color: black;
+  }
+  
+  .item:hover h5 {
+    color: #ffc107; /* Màu chữ khi di chuột qua */
+    font-size: 1.2em; /* Increase font size on hover */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Animation for shaking effect */
+  }
+  .h6, .h7 {
+    text-align: center;
+  }
+
+  .product-item:hover h7 {  /* Target h7 within hovered product-item */
+    color: #ffc107; /* Hover color for h7 */
+    font-size: 1.2em; /* Increase font size on hover */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Animation for shaking effect */
+  }
+
+ 
+{% comment %} Xử lý trái tim trên ảnh {% endcomment %}
+  .product-item {
+    position: relative; /* Enable positioning for child elements */
+    text-align: center;
+  }
+
+  .like-btn {
+    position: absolute; /* Position the heart icon absolutely */
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    font-size: 24px; /* Adjust font size as needed */
+    color: #ff0000; /* Red color for the heart icon */
+    cursor: pointer; /* Indicate clickable behavior */
+  }
+
+  .like-btn.liked {
+    color: #00ff00; /* Green color for liked hearts */
+  }
+
+  /* Ensures the heart icon stays within the product image boundaries */
+  .product-item img {
+    max-width: 100%; /* Ensure the image doesn't overflow its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Make the image a block element */
+  }
+
+  .product-item .like-btn {
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    z-index: 1; /* Ensure the heart icon is on top of the image */
+  }
+  /* ... (Previous CSS rules) ... */
+
+  h1.text-uppercase.p-3 {
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
+    text-align: center;
+  }
+
+
+</style>
+
+{% comment %} Click vào ảnh {% endcomment %}
+
+{% endblock mycontent %} 
+
+
+<!--
+  https://kimphathiepthanh.com/danh-muc-san-pham/trang-suc-cau-hon/page/2/
+-->

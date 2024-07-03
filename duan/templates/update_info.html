@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block mycontent %}
+
+<br></br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      
+      
+
+      <div class="card">
+        <div class="card-header">
+          <h2>THÔNG TIN KHÁCH HÀNG VÀ ĐỊA CHỈ GIAO NHẬN</h2>
+        </div>
+         <strong> ** Thông Tin Khách Hàng: {{user.username}}</strong>
+        
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data" action="{% url 'update_info' %}" >
+            {% csrf_token %}
+            {{ info_form.as_p}}
+            <!--
+            .as_p**: Đây là phương thức do các biểu mẫu Django cung cấp. 
+            Nó hiển thị các trường biểu mẫu trong các thẻ HTML đoạn văn (<p>)
+            -->
+
+            <!-- SHIPPING infor-->
+            <br></br>
+            <strong>** Thông Tin Giao Nhận Hàng Hóa</strong>
+            {{ shipping_form.as_p}} 
+
+            <button type="submit" class="btn btn-primary">Lưu thông tin</button>
+          </form>
+        </div>
+      </div>  
+    </div>  
+  </div>
+</div>
+
+
+{% endblock mycontent %}
+
+<style>
+  /* Style for the container */
+  .container {
+    max-width: 100%;
+    padding: 50px; /* Padding on all sides */
+  }
+
+  /* Style for the card */
+  .card {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+
+  /* Style for the card header */
+  .card-header {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* Style for the form group */
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  /* Style for the form label */
+  .form-label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  /* Style for the form input */
+  .form-control {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  /* Style for the submit button */
+  .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+</style>

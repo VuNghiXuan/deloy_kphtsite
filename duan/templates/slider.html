@@ -1,0 +1,45 @@
+  
+<!-- Phần slider của banner : Sử dụng công cụ Carousel của bootrap-->
+<div class = "slider_banner mb-3">
+  <!-- Slider chính-->
+  <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <!-- Slider Bộ Sưu tập-->
+      {% for bo in bo_suu_tap %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %} data-bs-interval=1000">
+              <img src="{{bo.anh_dai_dien.url}}" class="d-block w-100" alt="Ảnh đại diện cho bộ sưu tập">
+          </div>
+      {%endfor bo_suu_tap%}        
+    </div>
+    
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+<!-- Slider Bộ sưu tập-->
+<div class="prods_collection mb-5">
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="owl-carousel owl-theme">
+        {% for bo in bo_suu_tap %}
+          <div class="item">
+            <img src="{{ bo.anh_dai_dien.url }}" class="img-fluid" alt="Ảnh bộ sưu tập {{ bo.ten_bo_suu_tap }}">  <a class="click-item" href="#{{ bo.id }}">
+              <h5>{{ bo.ten_bo_suu_tap }}</h5>
+            </a>
+          </div>
+        {% endfor bo_suu_tap %}
+
+        {% comment %} <button class="owl-dot active" aria-label="Go to slide 2"><span></span></button>
+        <button class="owl-dot" aria-label="Go to next slide"><span></span></button> {% endcomment %}
+      </div>
+    </div>
+  </div>
+</div>
+   

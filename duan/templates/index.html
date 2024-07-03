@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% comment %} {% load static %}  {% endcomment %}
+
+{% block mycontent %}
+
+  <div class = "container">
+    <!-- 1. Thêm trang slider và bộ sưu tập-->
+    {% include "slider.html" %}
+
+    <!-- 2. Hiển thị Sản phẩm -->    
+    {% for bo in bo_suu_tap %}
+      <div class="products mb-2">
+        <div class="products_title border-bottom">
+          <div class="row">
+            <div class="col-md-4">
+              <strong class="bg-warning text-uppercase p-3" id="{{ bo.id }}"> {{ bo.ten_bo_suu_tap }}
+              </strong>
+            </div>
+
+                        
+            <div class="col-md-8 d-flex align-items-center justify-content-end">  
+              <a href="{% url 'all_products_in_collection' bo_suu_tap_id=bo.id %}" class="btn btn-sm btn-outline-success">Xem toàn bộ sản phẩm</a>  
+            </div>
+            
+          </div>
+        </div>
+        
+        
+        <!-- Sản phẩm khác ngày 20240605, dưới đây trình bày theo slieder-->
+        <div class = "prods mb-5">
+          <div class="row">
+            <div class="large-12 columns">
+              <div class="owl-carousel owl-theme">
+                
+                {% for sp in san_pham %}
+                {% if sp.bo_suu_tap == bo and sp.hinh_anh.url %}
+                  <div class="product-item">                  
+                    <img src="{{ sp.hinh_anh.url }}" class="img-fluid" alt="...">
+                    {% comment %} <i class="fas fa-heart favorite-icon text-bg-danger" data-product-id="{{ sp.id }}"></i> {% endcomment %}
+                    
+                    <a class="click-item" href="{% url 'product_detail' san_pham_id=sp.id %}">
+                      <span class="like-count text-dark, position-absolute" style="top:0.5rem;right:2.2rem">{{ sp.luot_thich }}</span> 
+                      <i class="far fa-heart like-btn " data-product-id="{{ sp.id }}"></i>              
+                      <h7><strong>{{sp.so_thu_tu}}. {{ sp.ten_san_pham }}</strong></h7>
+                      {% if sp.ton_kho > 0 %}
+                        <p>Mã: {{ sp.ma_san_pham }}</p> 
+                      {% else %}
+                        <div class="out-of-stock text-danger"><h8>Hết hàng</h8> </div> 
+                      {% endif %}  
+                    </a>
+                  </div>
+                {% endif %}
+                {% endfor %}       
+
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>
+    {%endfor bo_suu_tap%}     
+  </div> 
+
+
+<!-- css cho Phần slider products -->
+<style>
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .click-item{
+    text-decoration: none; 
+    color: black; /* Màu chữ mặc định */
+    
+  }
+
+  .h5 {
+    color: black;
+  }
+  
+  .item:hover h5 {
+    color: #ffc107; /* Màu chữ khi di chuột qua */
+    font-size: 1.2em; /* Increase font size on hover */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Animation for shaking effect */
+  }
+  .h6, .h7 {
+    text-align: center;
+  }
+
+  .product-item:hover h7 {  /* Target h7 within hovered product-item */
+    color: #ffc107; /* Hover color for h7 */
+    font-size: 1.2em; /* Increase font size on hover */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Animation for shaking effect */
+  }
+
+ 
+{% comment %} Xử lý trái tim trên ảnh {% endcomment %}
+  .product-item {
+    position: relative; /* Enable positioning for child elements */
+    text-align: center;
+  }
+
+  .like-btn {
+    position: absolute; /* Position the heart icon absolutely */
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    font-size: 24px; /* Adjust font size as needed */
+    color: #ff0000; /* Red color for the heart icon */
+    cursor: pointer; /* Indicate clickable behavior */
+  }
+
+  .like-btn.liked {
+    color: #00ff00; /* Green color for liked hearts */
+  }
+
+  /* Ensures the heart icon stays within the product image boundaries */
+  .product-item img {
+    max-width: 100%; /* Ensure the image doesn't overflow its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Make the image a block element */
+  }
+
+  .product-item .like-btn {
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    z-index: 1; /* Ensure the heart icon is on top of the image */
+  }
+  /* ... (Previous CSS rules) ... */
+
+
+
+</style>
+
+{% comment %} Click vào ảnh {% endcomment %}
+
+{% endblock mycontent %} 
+
+
+<!--
+  https://kimphathiepthanh.com/danh-muc-san-pham/trang-suc-cau-hon/page/2/
+-->

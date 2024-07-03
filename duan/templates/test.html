@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% block mycontent %}
+
+{% for bo in bo_suu_tap %}
+  {{ bo.id }}{{ bo.ten_bo_suu_tap }}
+{% endfor %}
+{% endblock mycontent %} 
+
+
+<!--
+  https://kimphathiepthanh.com/danh-muc-san-pham/trang-suc-cau-hon/page/2/
+-->

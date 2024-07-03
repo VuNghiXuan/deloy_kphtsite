@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% block mycontent %}
+<section class= "mytitle bg-dark text-white py-4 my-1" >
+  <div class ="container">
+    <header class== "bg-dark py-2">
+      <div class = "container px-4 px-lg-5 my-2">
+        <div class='text-center text-white'>
+          <h1 class = "display-4 fw-border"> SẢN PHẨM
+            <p class="lead fw-normal text-white-50 mb-0"> 
+              Thông tin chi tiết về sản phẩm
+            </p>
+          </h1>
+        </div>
+      </div>
+    </header>
+  </div>
+</section>
+
+<div class="container">
+  <div class="product-detail" style="border: 1px solid #ddd; padding: 10px; margin-bottom: 15px;">  
+    <div class="row">
+      <div class="col-md-6">
+        <div class="product-image">
+          <img src="{{ san_pham.hinh_anh.url }}" alt="{{ san_pham.ten_san_pham }}" class="img-fluid" style="width: 70%;">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="product-info">
+          <h1 class="product-name">
+            {% if san_pham.ton_kho %}
+              {{ san_pham.ten_san_pham }}
+            {% else %}
+              <strike> {{ san_pham.ten_san_pham }}</strike>
+            {% endif %}
+          </h1>
+
+          {% comment %} <p class="product-description">{{ san_pham.mo_ta }}</p>
+
+          <div class="product-price">
+            Giá: <span class="price">{{ san_pham.gia_ban_mon }} (đồng)</span>
+          </div> {% endcomment %}
+
+          <ul class="product-details">
+            {% if san_pham.loai_vang %}
+              <li>Mã: {{ san_pham.ma_san_pham }}</li>
+            {% endif %}
+            {% if san_pham.loai_vang %}
+              <li>Loại vàng: {{ san_pham.loai_vang }}</li>
+            {% endif %}
+            {% if san_pham.tl_vang %}
+              <li>Trọng lượng vàng: {{ san_pham.tl_vang }}</li>
+            {% endif %}
+            {% if san_pham.tl_hot %}
+              <li>Trọng lượng hột: {{ san_pham.tl_hot }}</li>
+            {% endif %}
+            {% if san_pham.ton_kho %}
+              <li>Số lượng kho: {{ san_pham.ton_kho }}</li>
+            {% endif %}
+            {% if san_pham.tinh_trang %}
+              <li>Tình trạng: {{ san_pham.tinh_trang }}</li>
+            {% endif %}
+            {% if san_pham.gia_ban_mon %}
+              <li>Tình trạng: {{ san_pham.gia_ban_mon }}</li>
+            {% endif %}
+
+          </ul>
+
+          {% comment %} <br></br> {% endcomment %}
+          
+          <!-- Listbox nhập số lượng cần mua -center-->
+          <div class ='row justify-content-left my-4'>
+            <div class ='col-md-2'> Số lượng</div>
+              <div class ='col-md-2'>              
+                <select class="form-select form-select-sm" id="qty_of_buyer">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+            {% comment %} <div class ='col-md-3'>{{ san_pham.tinh_trang }}</div>             {% endcomment %}
+          <div>
+          {% comment %} <br></br> {% endcomment %}
+
+          <div class="product-actions my-3">
+            <a href="{% url 'index' %}" class="btn btn-sm btn-outline-success">Quay về trang chủ</a>
+            {% comment %} <button type="button" data-product-id="{{ san_pham.id }}" class="btn btn-sm btn-outline-success" id="add_cart">Thêm vào giỏ hàng</button> {% endcomment %}
+            <button type="button" value = {{san_pham.id}} class= "btn btn-sm btn-outline-success" id='add_cart'> Thêm vào giỏ hàng</button>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- css cho Phần slider san_phams -->
+<style>
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .click-item{
+    text-decoration: none;
+    color: black; /* Màu chữ mặc định */
+    
+  }
+
+  .h5 {
+    color: black;
+  }
+  h6 {
+    text-align: center;
+  }
+
+  .item:hover h5 {
+    color: #ffc107; /* Màu chữ khi di chuột qua */
+  }
+
+  /* General button style */
+  .btn.btn-sm.btn-outline-success {
+    background-color: #007bff; /* Blue background color */
+    color: white; /* White text color */
+    border: 1px solid #007bff; /* Blue border */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+  }
+
+  /* Hover effect for red background */
+  .btn.btn-sm.btn-outline-success:hover {
+    background-color: #dc3545; /* Red background color on hover */
+  }
+
+</style>
+<script>
+  // Check if button pressed
+  $(document).on('click', '#add_cart', function(e){
+    e.preventDefault();  // Prevent default form submission
+
+    $.ajax({
+      type: "POST",
+      url: '{% url "cart_add" %}',
+      data: {
+        //san_pham_id: $(this).val(),  // Use `$(this).val()` to get button value
+        san_pham_id: $('#add_cart').val(),
+        so_luong: $('#qty_of_buyer option:selected').text(),
+        csrfmiddlewaretoken:'{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        //console.log(json)
+        
+        //Dòng sau bị sai trước khi đi Đồng Tháp--> Đã thành công
+        //.cart_quantity
+
+        document.getElementById('cart_quantity').textContent= json.so_luong_gio
+        //location.reload();
+        
+      },
+      error: function(xhr, errmsg, err){}
+    });
+  });
+</script>
+
+{% comment %} <script>
+  //Check if button pressed
+  $(document).on('click','#cart-add', function(e){e.prventDefault();
+    $.ajax({
+      type: "Post"
+      url: '{% url "cart_add" %}',
+      data: {
+        san_pham_id: $('#cart-add').val(),
+        csrfmiddlewaretoken:'{{csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        console.log(json)
+      },
+      error: function(xhr, errmsg, err){}
+    })
+  })
+</script> {% endcomment %}
+
+{% endblock mycontent %} 
+
+
+<!--
+  https://kimphathiepthanh.com/danh-muc-san-pham/trang-suc-cau-hon/page/2/
+-->

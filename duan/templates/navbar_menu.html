@@ -1,0 +1,190 @@
+<!-- Menu bar-->
+<section class= "mymenu bg-warning ">
+    <div class ="container">
+        <div class ="row">
+            <div class ="row-md-3">
+
+            </div>
+            <!-- menu-->
+            <div class ="row-md-9">
+                <!--Thay màu cùng menubar:bg-warning-->
+                <nav class="navbar  navbar-expand-lg bg-warning" >
+                    <div class="container-fluid">
+                        <!--Thay navbar-brand thành navbar d-none: Để ẩn-->
+                      <a class="navbar d-none" href="#">Navbar</a>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                          
+
+                          
+                          <!--Trang chủ-->
+                          <li class="nav-item">
+                            {% comment %} <a class="nav-link active" aria-current="page" href="{% url 'index' %}"><strong>Trang chủ</strong></a> {% endcomment %}
+                            <a class="nav-link" aria-current="page" href="{% url 'index' %}"><strong>Trang chủ</strong></a>
+                          </li>
+                          
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <strong>Sản phẩm</strong>
+                            </a>
+                            <ul class="dropdown-menu">
+                              {% for bo in bo_suu_tap %}
+                                {% comment %} <li><a class="dropdown-item" href="{% url 'index' %}/bo_suu_tap={{ bo.id }}">{{ bo.ten_bo_suu_tap }}</a></li> {% endcomment %}
+
+                                <li><a class="dropdown-item" href="#{{ bo.id }}">{{ bo.ten_bo_suu_tap }}</a></li>
+                                {% if forloop.counter|divisibleby:3 %}
+                                  <li class="dropdown-divider"></li>
+                                {% endif %}
+                              {% endfor %}
+                            </ul>
+                          </li>
+
+                          {% comment %} <!-- Sản phẩm -->
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <strong>Sản phẩm</strong>
+                            </a>
+                            <ul class="dropdown-menu">
+                              
+                              {% for bo in bo_suu_tap %}
+                              <li><a class="dropdown-item" href="{{ bo.id }}">{{ bo.ten_bo_suu_tap }}</a></li>
+                              {% if forloop.counter|divisibleby:3 %}
+                                <li class="dropdown-divider"></li>
+                              {% endif %}
+                              {% endfor %}
+                                
+                            </ul>
+                          </li> {% endcomment %}
+
+                          <!-- Trả góp online -->
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <strong>Mua vàng trả góp</strong>
+                            </a>
+                            <ul class="dropdown-menu">                                      
+                              <li><a class="dropdown-item" href="#">Đặt hàng trước</a></li>
+                              <li><a class="dropdown-item" href="#">Giao dịch online</a></li>
+                              <li><a class="dropdown-item" href="#">Đóng lãi trả góp</a></li>
+                            </ul>
+                          </li> 
+
+                          
+
+
+                          <!-- Cầm đồ online -->
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <strong>Cầm đồ</strong>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Khai báo thông tin cầm đồ</a></li>                                      
+                              <li><a class="dropdown-item" href="#">Đóng lãi cầm đồ</a></li>                                      
+                            </ul>
+                          </li>
+
+                          <!-- Đầu tư tích lũy -->
+
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <strong>Đầu tư vàng tích lũy</strong>
+                            </a>
+                            <ul class="dropdown-menu">                              
+                              <li><a class="dropdown-item" href="#">Chuyển khoản đầu tư</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="#">Xem lịch sử đầu tư</a></li>
+                              <li><a class="dropdown-item" href="#">Chính sách đầu tư</a></li>
+                              </ul>
+                          </li>
+                          
+                          
+                          <!-- Khuyến mãi -->
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <strong>Khuyến mãi</strong>
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Sản phẩm khuyến mãi, giảm giá</a></li>
+                              <li><a class="dropdown-item" href="#">Vorcher</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="#">Tích và trả điểm</a></li>
+                              <li><a class="dropdown-item" href="#">Quà tặng</a></li>
+                            </ul>
+                          </li>
+                          
+                          <!--Giới thiệu-->
+                          <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'infor_company' %}"><strong>Giới thiệu</strong></a>
+                          </li>
+
+                          <!-- Tuyển dụng-->
+                          {% comment %} <li class="nav-item">
+                            <a class="nav-link " aria-disabled="false"><strong>Tuyển dụng</strong></a>
+                          </li> {% endcomment %}
+
+                          <!-- Tin tức-->
+                          {% comment %} <li class="nav-item">
+                            <a class="nav-link " aria-disabled="false"><strong>Tin tức</strong></a>
+                          </li> {% endcomment %}
+
+                          <!-- Tài khoản người dùng-->
+                          
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <strong>Tài khoản</strong>
+                            </a>
+                            <ul class="dropdown-menu">
+                              {% if user.is_authenticated %}
+                              
+                                <li><a class="dropdown-item" href="{% url 'update_user' %}">Tên và thông tin đăng nhập</a></li>
+                                <li><a class="dropdown-item" href="{% url 'update_info' %}">Thông tin và địa chỉ giao hàng</a></li>
+                                <li><a class="dropdown-item" href="{% url 'update_password' %}">Thay đổi mật khẩu</a></li>
+                                {% if user_permissions  %}
+                                <li><a class="dropdown-item" href="{% url 'user_permissions' %}">Quyền truy cập</a></li>
+                                {%endif%}
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Thoát khỏi tài khoản</a></li>
+                              {% else %}
+                                <li><a class="dropdown-item" href="{% url 'register' %}">Đăng ký thành viên</a></li>
+                              {% endif %}
+                              </ul>
+                          </li>
+
+                          <!-- Hệ thống : user.is_authenticated and user.is_superuser, has_role user 'manager', user_permissions -->
+                          {% if user_apps  %}
+                            <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <strong>Hệ thống</strong>
+                              </a>
+                              <ul class="dropdown-menu">
+                                  {% comment %} <li><a class="dropdown-item" href="{% url 'register' %}">Lịch sử đơn hàng</a></li> {% endcomment %}
+                                  {% if 'IIIquanlykho' in user_apps or 'VIIItratien' in user_apps %} 
+                                    
+
+                                    <li><a class="dropdown-item" href="{% url 'shipping_dash' %}">Đơn hàng thành công</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'not_shipping_dash' %}">Đơn hàng chưa vận chuyển</a></li>
+                                    
+                                  {% endif %} 
+                                  
+                                {% else %}
+                                <li class="nav-item">
+                                 
+                                  <a class="nav-link disabled" aria-disabled="true"><strong>Hệ thống</strong></a>
+                                 
+                                  <!--{% url 'infor_company' %}-->
+                                  {% comment %} <a class="nav-link" aria-current="page" href="#"><strong>Đơn hàng</strong></a> {% endcomment %}
+                                </li> 
+                                
+                                </ul>
+                            </li>
+                          {% endif %}
+                        </ul>                                
+                      </div>
+                    </div>
+                  </nav>
+            </div>
+        </div>
+
+    </div>
+</section>

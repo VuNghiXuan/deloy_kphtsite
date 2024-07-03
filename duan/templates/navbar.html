@@ -1,0 +1,115 @@
+{% comment %} Load media tag and include navbar menu {% endcomment %}
+{% load static %}
+{% comment %} {% include "navbar_menu.html" %} {% endcomment %}
+
+<section class="myhead ">
+  <div class="container ">
+    <div class="row">
+      <div class="col-md-1 py-2">
+        {% if congty.logoCongTy %}
+          <img src="{{ congty.logoCongTy.url }}" alt="logo" width="50" height="50">
+        {% else %}
+          <p>Không có logo</p>
+        {% endif %}
+      </div>
+
+      <!-- Tìm kiếm sản phẩm -->
+      <div class="col-md-6 py-3">
+        <form method="POST" action="{% url 'search_products' %}" >
+          {% csrf_token %}
+          <div class="input-group mb-3">
+            
+              <input type="text" class="form-control" name = "searched" placeholder="Tìm kiếm sản phẩm" aria-label="Tìm kiếm sản phẩm" aria-describedby="basic-addon2" style="width: 60%;">              
+              <button class="input-group-text" id="basic-addon2" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            
+
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-5 py-2 nav-container">
+        <div class="row">
+          <div class="col-md-3 d-flex align-items-center">
+            <div class="fs-2 text-danger">
+              <i class="fa-solid fa-phone-volume"></i>
+            </div>
+            <div class="text">
+              0981.701.372<br>
+              <a class="zalo text-danger" href="https://zalo.me/2872710137358781929"><strong>Zalo</strong></a>  
+            </div>
+          </div>
+
+          <div class="col-md-4 d-flex align-items-center">
+            <div class="fs-2 text-danger">
+              <!-- Xử lý ảnh avatar-->
+              {% if current_user.avatar %}
+                <img src="{{ current_user.avatar.url }}" alt="Logout" class="logout-icon rounded-circle" style="width: 50px; height: 50px;">
+                {% comment %} <img src="{{ current_user.avatar.url }}" alt="Logout" class="logout-icon" style="width: 50px; height: 50px";>                 {% endcomment %}
+              {% else %}
+                <i class="fa-solid fa-user"></i>
+              {% endif %}
+
+            </div>
+            <div class="text">
+              {% if user.is_authenticated %}
+                {{ user.username }}<br>
+                <a class="logout text-danger" href="{% url 'logout' %}"><strong>Thoát</strong></a>
+
+              {% else %}
+                Xin chào!<br>
+                <a class="login text-danger" href="{% url 'login' %}"><strong>Đăng Nhập</strong></a>
+              {% endif %}
+            </div>          
+          </div>
+
+          <div class="col-md-4 d-flex align-items-center">
+            <div class="fs-2 text-danger">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="text">
+                Giỏ hàng <br>
+                <a class="cart text-danger" href="{% url 'cart_sumary' %}" id="cart_quantity">
+                  <strong>{{cart|length}} (món)</strong>  
+                </a>
+            </div> 
+            
+            </span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include "navbar_menu.html" %}
+</section>
+
+<main class="main-content">
+  </main>
+
+<style>
+  .nav-link {
+    color: #000000; /* Default white text color */
+  }
+
+  .nav-link:hover {
+    color: #FFFFFF; /* Black text color on hover */
+  }
+
+  .zalo:hover, .login:hover, .cart:hover {
+    font-size: 1.2em; /* Increase font size on hover */
+  }
+
+  .myhead {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .main-content {
+    padding-top: 130px; /* Chiều cao của thanh navbar. Ghi chú < 100px thì bị che phần nội dung  */
+  }
+</style>

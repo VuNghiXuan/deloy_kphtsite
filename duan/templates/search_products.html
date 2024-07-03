@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% comment %} {% load static %}  {% endcomment %}
+
+{% block mycontent %}
+<section class= "mytitle bg-dark text-white py-4 my-1" >
+  <div class ="container">
+    <header class== "bg-dark py-2">
+      <div class = "container px-4 px-lg-5 my-2">
+        <div class='text-center text-white'>
+          <h1 class = "display-4 fw-border"> SẢN PHẨM
+            <p class="lead fw-normal text-white-50 mb-0"> 
+              
+                Kết quả tìm kiếm cho ... "{{key_word}}"
+              
+            </p>
+          </h1>
+        </div>
+      </div>
+    </header>
+  </div>
+</section>
+
+
+
+<div class = "container"> 
+    
+    <div class="products_item py-3">
+      <div class="row">
+        {% if searched %}
+          {% for sp in searched%}
+            <div class="col-md-3 mb-3">
+              <div class="product-item">                  
+                <img src="{{ sp.hinh_anh.url }}" class="img-fluid" alt="...">
+                {% comment %} <i class="fas fa-heart favorite-icon text-bg-danger" data-product-id="{{ sp.id }}"></i> {% endcomment %}
+                
+                <a class="click-item" href="{% url 'product_detail' san_pham_id=sp.id %}">
+                  <span class="like-count text-dark, position-absolute" style="top:0.5rem;right:2.2rem">{{ sp.luot_thich }}</span> 
+                  <i class="far fa-heart like-btn " data-product-id="{{ sp.id }}"></i>              
+                  <h7><strong>{{forloop.counter}}. {{ sp.ten_san_pham }}</strong></h7>
+                  {% if sp.ton_kho > 0 %}
+                    <p>Mã: {{ sp.ma_san_pham }}</p> 
+                  {% else %}
+                    <div class="out-of-stock text-danger"><h8>Hết hàng</h8> </div> 
+                  {% endif %}  
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h3>Không tìm thấy sản phẩm với ... từ khóa "{{key_word}}"</h3>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- css cho Phần slider products -->
+<style>
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .click-item{
+    text-decoration: none; 
+    color: black; /* Màu chữ mặc định */
+    
+  }
+
+  .h5 {
+    color: black;
+  }
+  
+  .item:hover h5 {
+    color: #ffc107; /* Màu chữ khi di chuột qua */
+    font-size: 1.2em; /* Increase font size on hover */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Animation for shaking effect */
+  }
+  .h6, .h7 {
+    text-align: center;
+  }
+
+  .product-item:hover h7 {  /* Target h7 within hovered product-item */
+    color: #ffc107; /* Hover color for h7 */
+    font-size: 1.2em; /* Increase font size on hover */
+    animation: shake 0.5s ease-in-out infinite alternate; /* Animation for shaking effect */
+  }
+
+ 
+{% comment %} Xử lý trái tim trên ảnh {% endcomment %}
+  .product-item {
+    position: relative; /* Enable positioning for child elements */
+    text-align: center;
+  }
+
+  .like-btn {
+    position: absolute; /* Position the heart icon absolutely */
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    font-size: 24px; /* Adjust font size as needed */
+    color: #ff0000; /* Red color for the heart icon */
+    cursor: pointer; /* Indicate clickable behavior */
+  }
+
+  .like-btn.liked {
+    color: #00ff00; /* Green color for liked hearts */
+  }
+
+  /* Ensures the heart icon stays within the product image boundaries */
+  .product-item img {
+    max-width: 100%; /* Ensure the image doesn't overflow its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Make the image a block element */
+  }
+
+  .product-item .like-btn {
+    top: 10px; /* Adjust top position as needed */
+    right: 10px; /* Adjust right position as needed */
+    z-index: 1; /* Ensure the heart icon is on top of the image */
+  }
+  /* ... (Previous CSS rules) ... */
+
+  h1.text-uppercase.p-3 {
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
+    text-align: center;
+  }
+
+
+</style>
+
+{% comment %} Click vào ảnh {% endcomment %}
+
+{% endblock mycontent %} 
+
+
+<!--
+  https://kimphathiepthanh.com/danh-muc-san-pham/trang-suc-cau-hon/page/2/
+-->

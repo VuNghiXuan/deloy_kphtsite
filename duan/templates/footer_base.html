@@ -1,0 +1,39 @@
+<section class= "myfooter bg-dark text-white py-4 my-1" >
+    <div class ="container">
+        <!--Danh sách chi nhánh-->
+        <div class ="row">
+            <h3 class = 'name_company text-warning'>{{congty.ten_cong_ty}}</h3>
+            {% for cn in chinhanh %}
+            <div class = 'col md-3'>
+                
+                <ul>
+                    <li>{{cn.ten_chi_nhanh}}: {{cn.dia_chi}}</li>
+                    <li>Hotline: {{cn.hotline}}</li>
+                    {% comment %} <li>Email: {{cn.Email}}</li> {% endcomment %}
+                    <li>Giờ mờ cửa: 8 giờ --> 21 giờ 30</li>                            
+                </ul>
+            </div>
+            {% endfor chinhanh %}
+
+            <hr>
+            <div class ="row">
+                <div class ="col-md-6">
+                    <p class ="m-0">@Copyright 2024, {{congty.ten_cong_ty}}</p>
+                    <p class ="m-0">Địa chỉ: {{congty.dia_chi}}</p>
+                </div> 
+
+                <!-- facebook, twitter-->  
+                
+                <!--
+                <div class ="col-md-6 mr-3 py-2">
+                    <span class='box50 border border-danger bg-white py+1'><i class="fa-brands fa-facebook text-primary"></i></span>
+                    <span class='box50 border border-danger bg-white'><i class="fa-brands fa-square-twitter text-primary"></i></span>
+                    <span class='box50 border border-danger bg-white'><i class="fa-brands fa-google text-danger"></i></i></span>
+                    <span class='box50 border border-danger bg-white'><i class="fa-brands fa-youtube text-danger"></i></i></span>
+                                            
+                </div> 
+                -->
+            </div>
+        </div>
+    </div>
+</section>

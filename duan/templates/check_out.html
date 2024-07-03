@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %} 
+
+{% block mycontent %}
+<section class= "mytitle bg-dark text-white py-4 my-1" >
+  <div class ="container">
+    <header class== "bg-dark py-2">
+      <div class = "container px-4 px-lg-5 my-2">
+        <div class='text-center text-white'>
+          <h1 class = "display-4 fw-border"> KIỂM TRA ĐƠN HÀNG
+            <p class="lead fw-normal text-white-50 mb-0"> 
+              Thông tin đơn hàng
+            </p>
+          </h1>
+        </div>
+      </div>
+    </header>
+  </div>
+</section>
+
+<div class="container">
+  <div class = "col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-header">
+        <strong>KIỂM TRA ĐƠN HÀNG</strong>
+      </div>
+      <div class="card-body">
+        {% for sp in cart_san_pham %}
+          <strong>{{ forloop.counter }}. </strong>{{sp.ten_san_pham}}
+          {% if sp.ton_kho %}
+            <br>
+            <small> Số lượng: 
+            {% for key, val in so_luong.items%} 
+            {% comment %} Giải sử key ="Sản phẩm mới nhất". thì slugify trả về : "san-pham-moi-nhat" {% endcomment %}
+              {% if key == sp.id|slugify %}
+                {{val}}
+                {% comment %} <option value="1">{{val}}</option> {% endcomment %}
+              {% endif %}
+            {% endfor%}</small> </br>
+            
+          {% else %}
+            (Đã hết hàng)
+          {% endif %}
+          </br>
+        {% endfor%}
+        <strong>* Tổng giá trị: {{tong_gia_tri}} (đồng)</strong>
+        <br></br>
+        <a href = '{% url "cart_sumary" %}' class ='btn btn-sm btn-outline-success'>Chỉnh sửa giỏ hàng</a>
+      </div>
+    </div>
+
+    <!-- KIỂM TRA SHIPPING-->
+    <br></br>
+    <div class="card">
+      <div class="card-header">
+        <strong>KIỂM TRA TÊN VÀ ĐỊA CHỈ NHẬN HÀNG</strong>
+      </div>
+      <div class="card-body">
+        <form method="POST" action="{% url 'billing_info' %}">
+          {% csrf_token %}
+          {{ shipping_form.as_p}}
+          <button type="submit" class ='btn btn-sm btn-outline-danger'>
+            Xuất biên nhận
+          </button>
+        </form>
+        {% comment %} <a href = '{% url "billing_info" %}' class ='btn btn-sm btn-outline-success'>Tiếp tục thanh toán</a> {% endcomment %}
+      </div>
+    </div>
+    {% comment %} <a href = '{% url "billing_info" %}' class ='btn btn-sm btn-outline-success'>Mua hàng ngay</a> {% endcomment %}
+  </div>
+</div>
+
+
+<!-- css cho Phần slider san_phams -->
+<style>
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .click-item{
+    text-decoration: none;
+    color: black; /* Màu chữ mặc định */
+    
+  }
+
+  .h5 {
+    color: black;
+  }
+  h6 {
+    text-align: center;
+  }
+
+  .item:hover h5 {
+    color: #ffc107; /* Màu chữ khi di chuột qua */
+  }
+
+  /* General button style */
+  .btn.btn-sm.btn-outline-success {
+    background-color: #007bff; /* Blue background color */
+    color: white; /* White text color */
+    border: 1px solid #007bff; /* Blue border */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+  }
+
+  /* Hover effect for red background */
+  .btn.btn-sm.btn-outline-success:hover {
+    background-color: #dc3545; /* Red background color on hover */
+  }
+
+</style>
+<script>
+  // Check if button pressed
+  $(document).on('click', '#add_cart', function(e){
+    e.preventDefault();  // Prevent default form submission
+
+    $.ajax({
+      type: "POST",
+      url: '{% url "cart_add" %}',
+      data: {
+        //san_pham_id: $(this).val(),  // Use `$(this).val()` to get button value
+        san_pham_id: $('#add_cart').val(),
+        so_luong: $('#qty_of_buyer option:selected').text(),
+        csrfmiddlewaretoken:'{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        //console.log(json)
+        
+        //Dòng sau bị sai trước khi đi Đồng Tháp--> Đã thành công
+        //.cart_quantity
+
+        document.getElementById('cart_quantity').textContent= json.so_luong_gio
+        //location.reload();
+        
+      },
+      error: function(xhr, errmsg, err){}
+    });
+  });
+</script>
+
+
+
+{% endblock mycontent %} 
+
+
+<!--
+  https://kimphathiepthanh.com/danh-muc-san-pham/trang-suc-cau-hon/page/2/
+-->

@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+{% comment %} {% load static %}  {% endcomment %}
+
+{% block mycontent %}
+<section class= "mytitle bg-dark text-white py-4 my-1" >
+  <div class ="container">
+    <header class== "bg-dark py-2">
+      <div class = "container px-4 px-lg-5 my-2">
+        <div class='text-center text-white'>
+          <h1 class = "display-4 fw-border"> GIỎ HÀNG
+            <p class="lead fw-normal text-white-50 mb-0"> 
+              Các món hàng trong giỏ
+            </p>
+          </h1>
+        </div>
+      </div>
+    </header>
+  </div>
+</section>
+
+<div class = 'container'>
+  {% if cart_san_pham%}
+    {% for san_pham in cart_san_pham %}
+      <div class = 'row my-2'style="border: 2px solid #ddd; padding: 10px; margin-bottom: 0px;">
+        <!--Cột 1: Bố trí ảnh-->
+        <div class = 'col-md-6'>
+          <div class="product-image">
+            <img src="{{ san_pham.hinh_anh.url }}" alt="{{ san_pham.ten_san_pham }}" class="img-fluid" style="width: 70%;">
+          </div>
+        </div>
+        
+        <!--Cột 2: Bố trí thông tin sản phẩm-->
+        <div class = 'col-md-6'>
+          <h1 class="product-name">
+            {% if san_pham.ton_kho %}
+              {{ forloop.counter }}. {{ san_pham.ten_san_pham }}
+            {% else %}
+              <strike>{{ forloop.counter }}. {{ san_pham.ten_san_pham }}</strike>
+            {% endif %}
+          </h1>
+
+          <ul class="product-details">
+            {% if san_pham.loai_vang %}
+              <li>Mã: {{ san_pham.ma_san_pham }}</li>
+            {% endif %}
+            {% if san_pham.loai_vang %}
+              <li>Loại vàng: {{ san_pham.loai_vang }}</li>
+            {% endif %}
+            {% if san_pham.tl_vang %}
+              <li>Trọng lượng vàng: {{ san_pham.tl_vang }}</li>
+            {% endif %}
+            {% if san_pham.tl_hot %}
+              <li>Trọng lượng hột: {{ san_pham.tl_hot }}</li>
+            {% endif %}
+            {% if san_pham.ton_kho %}
+              <li>Số lượng kho: {{ san_pham.ton_kho }}</li>
+            {% endif %}
+            {% if san_pham.tinh_trang %}
+              <li>Tình trạng: {{ san_pham.tinh_trang }}</li>
+            {% endif %}
+
+            {% if san_pham.gia_ban_mon %}
+              <li>Giá: {{ san_pham.gia_ban_mon }}</li>
+            {% endif %}
+          </ul>
+        
+          <!-- Bố trí dòng: Listbox số lượng -->
+           {% comment %} <br></br> {% endcomment %}
+          <div class = 'row no-gutters justify-content-left my-10'>
+            <!--Cột 1 của số lượng-->
+            <div class = 'col-md-3'>
+              <strong>Cập nhật số lượng </strong>
+            </div>
+
+            <!--Cột 2 select box-->
+            <div class = 'col-md-2'>
+              <select class="form-select form-select-sm" id="select{{san_pham.id}}">
+                {% for key, val in so_luong.items%} 
+                  {% if key == san_pham.id|slugify %}
+                    <option selected>{{val}}</option> 
+                    {% comment %} <option value="1">{{val}}</option> {% endcomment %}
+                  {% endif %}
+                {% endfor%}
+                <!---->
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                
+              </select>
+            </div>
+
+            <!--Cột 3 tình trạng-->
+            {% comment %} <div class = 'col-md-7'>
+              Tình trạng: {{ san_pham.tinh_trang }}
+            </div> {% endcomment %}
+          </div>
+          
+          <!-- Bố trí các nút quay về, cập nhật số lượng, xóa sản phẩm cho giỏ hàng -->
+          <div class="product-actions my-2">
+            <a href="{% url 'index' %}" class="btn btn-sm btn-outline-success">Trang chủ</a>
+            
+            <button type="button" data-index="{{ san_pham.id }}" class="btn btn-sm btn-outline-success update-card">Cập nhật</button> 
+            <button type="button" data-index="{{ san_pham.id }}" class="btn btn-sm btn-outline-danger delete-product">Xóa sản phẩm</button> 
+          </div>
+
+        </div>
+        
+        
+        
+
+       
+      </div>
+    {% endfor %}
+
+    <!--Tổng giá trị giỏ hàng-->
+    <div align = 'right'>
+      <h3><strong> * Tổng số tiền thanh toán: {{tong_gia_tri}} (đồng)</strong></h3>
+      <a href ='{% url "check_out"%}'class = 'btn btn btn-outline-danger'>Kiểm tra đơn hàng và thanh toán</a>
+    </div>
+    
+    
+    
+    <br></br>
+  {% else %}
+    <br></br>
+    <h1 class = 'text-danger'><strong> Giỏ không có hàng hóa...</strong></h1>
+    <br></br>
+    <p><strong> Vui lòng quay lại "Trang chủ" để chọn sản phẩm !!!</strong></p>
+    <a href="{% url 'index' %}" class="btn btn-sm btn-outline-success">Quay về trang chủ</a>
+    <br></br>
+    <br></br>
+    <br></br>
+
+  {% endif %}
+</div>
+
+
+
+<!-- css cho Phần slider products --> 
+<style>
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .click-item{
+    text-decoration: none;
+    color: black; /* Màu chữ mặc định */
+    
+  }
+
+  .h5 {
+    color: black;
+  }
+  h6 {
+    text-align: center;
+  }
+
+  .item:hover h5 {
+    color: #ffc107; /* Màu chữ khi di chuột qua */
+  }
+
+  /* General button style */
+  .btn.btn-sm.btn-outline-success {
+    background-color: #007bff; /* Blue background color */
+    color: white; /* White text color */
+    border: 1px solid #007bff; /* Blue border */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+  }
+
+  /* Hover effect for red background */
+  .btn.btn-sm.btn-outline-success:hover {
+    background-color: #dc3545; /* Red background color on hover */
+  }
+
+</style>
+
+
+<script>
+  // 1. Update giỏ hàng
+  // Check if button pressed
+  $(document).on('click', '.update-card', function(e){
+    e.preventDefault();  // Prevent default form submission
+    
+    //Grab the products
+    var product_id = $(this).data('index');
+    $.ajax({
+      type: "POST",
+      url: '{% url "cart_update" %}',
+      data: {
+        
+        //<button type="button" data-index="42" class="btn btn-sm btn-outline-success update-card" >Cập nhật thay đổi</button> 
+        san_pham_id: $(this).data('index'),
+        
+        //<select class="form-select form-select-sm" id="select42">
+        //so_luong: $('#select' + product_id +'option:selected').text(),
+        so_luong: $('#select' + product_id ).val(),
+        
+        csrfmiddlewaretoken:'{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        console.log(json)
+        
+        //Dòng sau bị sai trước khi đi Đồng Tháp--> Đã thành công
+        //.cart_quantity
+
+        //document.getElementById('cart_quantity').textContent= json.so_luong_gio;
+        location.reload();
+      },
+      error: function(xhr, errmsg, err){}
+    });
+  });
+
+  // 2. Remove product out cart
+  // Check if button pressed
+  $(document).on('click', '.delete-product', function(e){
+    e.preventDefault();  // Prevent default form submission
+    
+    //Grab the products
+    //var product_id = $(this).data('index');
+    $.ajax({
+      type: "POST",
+      url: '{% url "cart_delete" %}',
+      data: {
+        
+        //<button type="button" data-index="42" class="btn btn-sm btn-outline-success update-card" >Cập nhật thay đổi</button> 
+        san_pham_id: $(this).data('index'),
+
+        csrfmiddlewaretoken:'{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        console.log(json)
+        
+        //Dòng sau bị sai trước khi đi Đồng Tháp--> Đã thành công
+        //.cart_quantity
+
+        //document.getElementById('cart_quantity').textContent= json.so_luong_gio;
+        location.reload();
+      },
+      error: function(xhr, errmsg, err){}
+    });
+  });
+
+
+</script>
+
+{% endblock mycontent %} 
+
+
+<!--
+  https://kimphathiepthanh.com/danh-muc-san-pham/trang-suc-cau-hon/page/2/
+-->

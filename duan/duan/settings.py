@@ -39,8 +39,9 @@ ALLOWED_HOSTS = ['deloykphtsite-production.up.railway.app', 'https://deloykphtsi
 
 # deloy 20240702
 # CSRF_TRUSTED_ORIGINS = []
-CSRF_TRUSTED_ORIGINS = ['deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app']
+# CSRF_TRUSTED_ORIGINS = ['deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app']
 
+CSRF_TRUSTED_ORIGINS = ['http://deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app']
 
 
 # Application definition

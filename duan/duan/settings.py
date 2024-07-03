@@ -34,12 +34,13 @@ SECRET_KEY = 'django-insecure-d3t)kdu_(s13-^v(9!z4p+=9itl+$^%5c3e3m2ao6$hg=kq%di
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app']
+# ALLOWED_HOSTS : Chỉ định các tên miền được phép truy cập vào trang web.
+ALLOWED_HOSTS = ['deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app', '127.0.0.1']
 
 
 # deloy 20240702
 # CSRF_TRUSTED_ORIGINS = []
-# CSRF_TRUSTED_ORIGINS = ['deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app']
+# CSRF_TRUSTED_ORIGINS ấu hình quan trọng liên quan đến lỗi bạn gặp phải (sẽ giải thích chi tiết sau).
 
 CSRF_TRUSTED_ORIGINS = ['http://deloykphtsite-production.up.railway.app', 'https://deloykphtsite-production.up.railway.app']
 
